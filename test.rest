@@ -1,0 +1,82 @@
+
+###
+POST http://localhost:13000/users/register/
+Content-Type: application/json
+
+{
+    "username": "batu",
+    "usersurname": "balin",
+    "email": "batu@gmail.com",
+    "usersection": "sayisal",
+    "password": "12345"
+}
+
+###
+POST http://localhost:13000/users/login/
+Content-Type: application/json
+
+{
+  "username": "batu",
+  "password": "12345"
+}
+
+###
+GET http://localhost:13000/api/course-list
+###
+GET http://localhost:13000/api/course-details/1
+
+###
+POST http://localhost:13000/api/join-course/1/1
+
+###
+GET http://localhost:13000/api/questions-solve/1/1
+
+###
+GET http://localhost:13000/api/statistics/1/1
+
+###
+POST http://localhost:13000/api/take-note/1/1/
+Content-Type: application/json
+
+{
+  "content": "not alındı"
+}
+
+###
+GET http://localhost:13000/api/get-note/2
+
+###
+DELETE http://localhost:13000/api/delete-note/1
+
+###
+PUT http://localhost:13000/api/change-note/2/
+Content-Type: application/json
+
+{
+  "content": "not değiitirildi"
+}
+
+###
+POST http://localhost:13000/api/share-note/2
+
+###
+GET http://localhost:13000/api/shared-notes
+
+###
+POST http://localhost:13000/api/create-question/1/
+Content-Type: application/json
+
+{
+  "content": "soru soruldu"
+}
+###
+GET http://localhost:13000/api/get-questions
+###
+POST  http://localhost:13000/api/share-question/1/2
+###
+POST  http://localhost:13000/api/share-solved-question/1/2
+Content-Type: application/json
+
+{
+  "content": "cözüm bu"
+}

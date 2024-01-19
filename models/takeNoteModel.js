@@ -2,7 +2,33 @@
 const pool = require('../config/db');
 
 class TakeNoteModel {
+    async ensureTableExists() {
+        const checkTableQuery = `
+            SELECT EXISTS (
+                SELECT 1
+                FROM information_schema.tables
+                WHERE table_name = 'user_course_notes'
+            )`;
+
+        const checkTableResult = await pool.query(checkTableQuery);
+        const tableExists = checkTableResult.rows[0].exists;
+
+        if (!tableExists) {
+            // Tablo henüz oluşturulmamışsa, tabloyu oluştur.
+            const createTableQuery = `
+                CREATE TABLE user_course_notes (
+                    id SERIAL PRIMARY KEY,
+                    user_id INTEGER NOT NULL,
+                    course_id INTEGER NOT NULL,
+                    content TEXT,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )`;
+
+            await pool.query(createTableQuery);
+        }
+    }
     async createNote(userId, courseId, content) {
+        await this.ensureTableExists();
         const query = 'INSERT INTO user_course_notes (user_id, course_id, content) VALUES ($1, $2, $3) RETURNING *';
         const values = [userId, courseId, content];
 

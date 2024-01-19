@@ -14,7 +14,7 @@ const { authenticateToken } = require('./middlewares/authMiddleware');
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(express.json());
 app.use('/users', userRoutes);
 app.use('/api', courseRoutes);
 app.use('/api', courseDetailsRoutes);

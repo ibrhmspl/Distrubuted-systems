@@ -15,11 +15,11 @@ class CourseDetailsModel {
 
     async seedDefaultCourseDetails() {
         const seedQuery = `
-          INSERT INTO course_details (course_id, content)
-          VALUES 
-            ((SELECT id FROM courses WHERE title = 'Course 1'), 'Detailed content for Course 1'),
-            ((SELECT id FROM courses WHERE title = 'Course 2'), 'Detailed content for Course 2'),
-            ((SELECT id FROM courses WHERE title = 'Course 3'), 'Detailed content for Course 3')
+            INSERT INTO course_details (course_id, content)
+            VALUES
+                ((SELECT id FROM courses WHERE title = 'Course 1' LIMIT 1), 'Detailed content for Course 1'),
+                ((SELECT id FROM courses WHERE title = 'Course 2' LIMIT 1), 'Detailed content for Course 2'),
+                ((SELECT id FROM courses WHERE title = 'Course 3' LIMIT 1), 'Detailed content for Course 3')
         `;
 
         await pool.query(seedQuery);
@@ -27,7 +27,7 @@ class CourseDetailsModel {
 
     async getCourseDetailsByCourseId(courseId) {
         await this.createCourseDetailsTable();
-        await this.seedDefaultCourseDetails(); // seed fonksiyonunu burada çağırın
+        await this.seedDefaultCourseDetails();
         const selectQuery = 'SELECT * FROM course_details WHERE course_id = $1';
         const values = [courseId];
         const result = await pool.query(selectQuery, values);

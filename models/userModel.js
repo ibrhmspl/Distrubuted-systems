@@ -16,19 +16,21 @@ class UserModel {
         await pool.query(createTableQuery);
     }
 
-    async createUser(username,usersurname, email,usersection, password) {
+    async createUser(username, usersurname, email, usersection, password) {
         
         await this.createUserTable();
         
-        const insertQuery = 'INSERT INTO users (username,usersurname, email,usersection, password) VALUES ($1, $2, $3, $4, $5) RETURNING *';
-        const values = [username,usersurname, email,usersection, password];
-
+        const insertQuery = 'INSERT INTO users (username, usersurname, email, usersection, password) VALUES ($1, $2, $3, $4, $5) RETURNING *';
+        const values = [username, usersurname, email, usersection, password];
         const result = await pool.query(insertQuery, values);
-        return result.rows[0];
+        if (result.rows.length > 0) {
+            console.log(result.rows[0]);
+            return result.rows[0];
+        }
     }
 
     async getUserByUsername(username) {
-        await this.createUserTable();
+        //await this.createUserTable();
 
         const selectQuery = 'SELECT * FROM users WHERE username = $1';
         const values = [username];

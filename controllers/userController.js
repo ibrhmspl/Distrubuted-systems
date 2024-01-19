@@ -3,10 +3,14 @@ const jwt = require('jsonwebtoken');
 
 class UserController {
     async register(req, res) {
-        const { username,usersurname, email,usersection, password } = req.body;
 
+        const {username, usersurname, email, usersection, password} = req.body;
+
+        if (!username || !usersurname || !email || !usersection || !password) {
+            return res.status(400).json({ error: 'Missing required fields' });
+        }
         try {
-            const user = await userModel.createUser(username,usersurname, email,usersection, password);
+            const user = await userModel.createUser(username, usersurname, email, usersection, password);
             
         } catch (error) {
             console.error(error);
